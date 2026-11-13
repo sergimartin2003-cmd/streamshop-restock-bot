@@ -1,0 +1,194 @@
+{
+  "530893:809183": {
+    "name": "Netflix",
+    "stock": 3,
+    "price": "0.50",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/netflix",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/03fc00cc-929c-4c01-54d3-f4d4e354f900/public"
+  },
+  "530894:809184": {
+    "name": "Disney+",
+    "stock": 3,
+    "price": "0.40",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/disney",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/d4181bcf-2e27-488a-9af7-c5c8e080b300/public"
+  },
+  "530898:809188": {
+    "name": "Crunchyroll",
+    "stock": 1,
+    "price": "0.40",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/crunchyroll",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/b41e949d-d75f-48fd-77f9-086934cc3800/public"
+  },
+  "530902:809192": {
+    "name": "DAZN — Random",
+    "stock": 3,
+    "price": "0.80",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/dazn-ramdom",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/4349eac2-cc49-4eee-3de8-b609abce8b00/public"
+  },
+  "530902:2068149": {
+    "name": "DAZN — MOTOR (ES)",
+    "stock": 0,
+    "price": "1.00",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/dazn-ramdom",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/4349eac2-cc49-4eee-3de8-b609abce8b00/public"
+  },
+  "530902:2068150": {
+    "name": "DAZN — FÚTBOL (ES)",
+    "stock": 0,
+    "price": "1.00",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/dazn-ramdom",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/4349eac2-cc49-4eee-3de8-b609abce8b00/public"
+  },
+  "530902:2068151": {
+    "name": "DAZN — TOTAL",
+    "stock": 0,
+    "price": "1.50",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/dazn-ramdom",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/4349eac2-cc49-4eee-3de8-b609abce8b00/public"
+  },
+  "530907:809199": {
+    "name": "Max",
+    "stock": 1,
+    "price": "0.40",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/max",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/2d15a0d8-25a7-44c8-4d1a-7a1b3220cd00/public"
+  },
+  "530909:809201": {
+    "name": "Paramount+ — USA",
+    "stock": 0,
+    "price": "0.40",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/paramount-usa",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/547fd4b1-b686-412e-48c9-ae9328650d00/public"
+  },
+  "530909:2068152": {
+    "name": "Paramount+ — LATAM / EU",
+    "stock": 0,
+    "price": "0.40",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/paramount-usa",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/547fd4b1-b686-412e-48c9-ae9328650d00/public"
+  },
+  "530912:809204": {
+    "name": "Duolingo",
+    "stock": 2,
+    "price": "0.40",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/duolingo",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/75a3f611-1a9f-4ba3-fddf-c915478e2000/public"
+  },
+  "530913:809205": {
+    "name": "Steam [Lifetime]",
+    "stock": 17,
+    "price": "0.40",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/steam-lifetime",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/790a35d7-5a13-440c-95ba-f8905296a900/public"
+  },
+  "530917:809209": {
+    "name": "ExpresVpn",
+    "stock": 0,
+    "price": "0.40",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/expresvpn",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/ad392aa0-fca3-4d29-b6cb-8b1cfe14e700/public"
+  },
+  "530918:809210": {
+    "name": "NBA",
+    "stock": 3,
+    "price": "0.25",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/nba",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/30b16ec1-e4da-48af-2891-bdc14d0a8e00/public"
+  },
+  "530920:809212": {
+    "name": "Filmora",
+    "stock": 6,
+    "price": "0.40",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/filmora",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/5beefba6-89c0-40b8-5a20-690abd587a00/public"
+  },
+  "530921:809213": {
+    "name": "Amc+",
+    "stock": 0,
+    "price": "0.40",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/amc",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/ef7509c3-2782-4ea6-dc8b-04e06bb7da00/public"
+  },
+  "530925:809217": {
+    "name": "Spotify Premium — Lifetime",
+    "stock": 0,
+    "price": "1.00",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/spotify-premium-lifetime",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/b78bf83d-70cc-46e9-a995-84fd5f37da00/public"
+  },
+  "530925:2068153": {
+    "name": "Spotify Premium — 1 año individual",
+    "stock": 0,
+    "price": "2.00",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/spotify-premium-lifetime",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/b78bf83d-70cc-46e9-a995-84fd5f37da00/public"
+  },
+  "530928:809220": {
+    "name": "Youtube Premium",
+    "stock": 0,
+    "price": "1.50",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/youtube-premium",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/91c9d95f-c022-433b-141d-af6235502f00/public"
+  },
+  "531219:809854": {
+    "name": "CAPCUTPRO",
+    "stock": 0,
+    "price": "1.00",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/capcutpro",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/0fc69cad-b369-4d86-d64c-a5a67f21ed00/public"
+  },
+  "531222:809858": {
+    "name": "Five M Ready",
+    "stock": 0,
+    "price": "0.60",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/five-m-ready",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/a44da3df-9b57-4a81-8483-d7af3c7acb00/public"
+  },
+  "531224:809860": {
+    "name": "Rockstar Activation Codes",
+    "stock": 0,
+    "price": "0.60",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/rockstar-activation-codes",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/69a1da5f-6110-44d5-8e78-3d1104980100/public"
+  },
+  "531225:809861": {
+    "name": "Microsoft Random Codes",
+    "stock": 0,
+    "price": "0.50",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/microsoft-random-codes",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/80317643-d9d3-4212-2cac-26ff240b6e00/public"
+  },
+  "531226:809862": {
+    "name": "Canva",
+    "stock": 0,
+    "price": "1.00",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/canva",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/e6cc129c-f13f-45a0-5f52-abc69e53a700/public"
+  }
+}
