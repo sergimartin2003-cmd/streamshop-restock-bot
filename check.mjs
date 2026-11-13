@@ -46,15 +46,20 @@ const money = (v, cur = 'EUR') => {
 const qty = (s) => (s === null || s === undefined || Number(s) < 0 ? Infinity : Number(s) || 0);
 
 async function loadProducts() {
-  const all = [];
-  for (let page = 1; page <= 20; page++) {
-    const res = await api(`/shops/${SELLAUTH_SHOP_ID}/products?page=${page}&perPage=100`);
+  // Paginación robusta: SellAuth no siempre respeta perPage ni devuelve last_page,
+  // así que seguimos pidiendo páginas hasta que una venga vacía o repetida.
+  const byId = new Map();
+  for (let page = 1; page <= 30; page++) {
+    const res = await api(`/shops/${SELLAUTH_SHOP_ID}/products?page=${page}&perPage=100&per_page=100`);
     const list = Array.isArray(res) ? res : res.data || [];
-    all.push(...list);
-    const last = res.last_page ?? res.meta?.last_page ?? 1;
-    if (Array.isArray(res) || page >= last || list.length === 0) break;
+    let added = 0;
+    for (const p of list) if (!byId.has(p.id)) { byId.set(p.id, p); added++; }
+    const last = res.last_page ?? res.meta?.last_page;
+    if (Array.isArray(res) || list.length === 0 || added === 0) break;
+    if (last && page >= last) break;
+    if (!last && res.next_page_url === null) break;
   }
-  return all;
+  return [...byId.values()];
 }
 
 function imageOf(p) {
@@ -115,7 +120,8 @@ async function runStock() {
   }
   const restocks = [];
   for (const [k, item] of Object.entries(now)) {
-    const was = (prev[k]?.stock ?? 0) === -1 ? Infinity : prev[k]?.stock ?? 0;
+    if (!prev[k]) continue; // producto nuevo o que no se leyó la vez anterior: sin aviso
+    const was = prev[k].stock === -1 ? Infinity : prev[k].stock;
     const is = item.stock === -1 ? Infinity : item.stock;
     if (was === 0 && is > 0) restocks.push({ ...item, kind: 'vuelve' });
     else if (was > 0 && is !== Infinity && is - was >= 3) restocks.push({ ...item, kind: 'mas' });
@@ -124,6 +130,8 @@ async function runStock() {
     await post(DISCORD_WEBHOOK_URL, { username: 'StreamShopp Stock', embeds: [restockEmbed(r)] });
     await sleep(1200);
   }
+  // conserva productos que esta vez no se leyeron (fallo puntual de la API) para no perder su stock
+  for (const [k, v] of Object.entries(prev)) if (!now[k]) now[k] = v;
   fs.writeFileSync(STATE, JSON.stringify(now, null, 2));
   console.log(`Stock: ${Object.keys(now).length} productos revisados, ${restocks.length} avisos.`);
 }

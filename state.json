@@ -138,5 +138,105 @@
     "currency": "EUR",
     "url": "https://streamshopp.mysellauth.com/product/canva",
     "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/e6cc129c-f13f-45a0-5f52-abc69e53a700/public"
+  },
+  "530902:809192": {
+    "name": "DAZN — Random",
+    "service": "DAZN",
+    "variant": "Random",
+    "stock": 3,
+    "price": "0.80",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/dazn-ramdom",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/4349eac2-cc49-4eee-3de8-b609abce8b00/public"
+  },
+  "530902:2068149": {
+    "name": "DAZN — MOTOR (ES)",
+    "service": "DAZN",
+    "variant": "MOTOR (ES)",
+    "stock": 0,
+    "price": "1.00",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/dazn-ramdom",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/4349eac2-cc49-4eee-3de8-b609abce8b00/public"
+  },
+  "530902:2068150": {
+    "name": "DAZN — FÚTBOL (ES)",
+    "service": "DAZN",
+    "variant": "FÚTBOL (ES)",
+    "stock": 0,
+    "price": "1.00",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/dazn-ramdom",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/4349eac2-cc49-4eee-3de8-b609abce8b00/public"
+  },
+  "530902:2068151": {
+    "name": "DAZN — TOTAL",
+    "service": "DAZN",
+    "variant": "TOTAL",
+    "stock": 0,
+    "price": "1.50",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/dazn-ramdom",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/4349eac2-cc49-4eee-3de8-b609abce8b00/public"
+  },
+  "530909:809201": {
+    "name": "Paramount+ — USA",
+    "service": "Paramount+",
+    "variant": "USA",
+    "stock": 0,
+    "price": "0.40",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/paramount-usa",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/547fd4b1-b686-412e-48c9-ae9328650d00/public"
+  },
+  "530909:2068152": {
+    "name": "Paramount+ — LATAM / EU",
+    "service": "Paramount+",
+    "variant": "LATAM / EU",
+    "stock": 0,
+    "price": "0.40",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/paramount-usa",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/547fd4b1-b686-412e-48c9-ae9328650d00/public"
+  },
+  "530925:809217": {
+    "name": "Spotify Premium — Lifetime",
+    "service": "Spotify Premium",
+    "variant": "Lifetime",
+    "stock": 0,
+    "price": "1.00",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/spotify-premium-lifetime",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/b78bf83d-70cc-46e9-a995-84fd5f37da00/public"
+  },
+  "530925:2068153": {
+    "name": "Spotify Premium — 1 año individual",
+    "service": "Spotify Premium",
+    "variant": "1 año individual",
+    "stock": 0,
+    "price": "2.00",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/spotify-premium-lifetime",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/b78bf83d-70cc-46e9-a995-84fd5f37da00/public"
+  },
+  "531222:809858": {
+    "name": "Five M Ready",
+    "service": "Five M Ready",
+    "variant": "",
+    "stock": 0,
+    "price": "0.60",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/five-m-ready",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/a44da3df-9b57-4a81-8483-d7af3c7acb00/public"
+  },
+  "531224:809860": {
+    "name": "Rockstar Activation Codes",
+    "service": "Rockstar Activation Codes",
+    "variant": "",
+    "stock": 0,
+    "price": "0.60",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/rockstar-activation-codes",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/69a1da5f-6110-44d5-8e78-3d1104980100/public"
   }
 }
