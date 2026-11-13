@@ -20,7 +20,7 @@ jobs:
       - name: Comprobar stock
         env:
           SELLAUTH_API_KEY: ${{ secrets.SELLAUTH_API_KEY }}
-          SELLAUTH_SHOP_ID: ${{ secrets.SELLAUTH_SHOP_ID }}
+          SELLAUTH_SHOP_ID: '194636'
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: node check.mjs
       - name: Guardar estado
