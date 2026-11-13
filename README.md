@@ -1,6 +1,6 @@
 # Bot de Discord · StreamShopp
 
-Cada ~30 minutos (GitHub Actions):
+Cada ~5 minutos (GitHub Actions, repo público = minutos ilimitados):
 - **#📦┃stock** — aviso estilo "PRODUCTO REPUESTO" (servicio, stock, precio, botón y foto) cuando algo vuelve a tener stock o recibe 3+ unidades.
 - **#💜┃ventas** — feed público y anónimo: "» Un Crack 🟢 acaba de comprar 1x Netflix usando PayPal".
 
