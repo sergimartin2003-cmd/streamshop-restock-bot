@@ -130,8 +130,10 @@ async function runStock() {
     await post(DISCORD_WEBHOOK_URL, { username: 'StreamShopp Stock', embeds: [restockEmbed(r)] });
     await sleep(1200);
   }
-  // conserva productos que esta vez no se leyeron (fallo puntual de la API) para no perder su stock
-  for (const [k, v] of Object.entries(prev)) if (!now[k]) now[k] = v;
+  // Si la API devolvió muy pocos productos (fallo puntual), conserva el estado anterior de los que faltan.
+  // Si la lectura es normal, los que faltan se consideran borrados y se quitan del estado.
+  const nPrev = Object.keys(prev).length, nNow = Object.keys(now).length;
+  if (nNow < nPrev * 0.5) for (const [k, v] of Object.entries(prev)) if (!now[k]) now[k] = v;
   fs.writeFileSync(STATE, JSON.stringify(now, null, 2));
   console.log(`Stock: ${Object.keys(now).length} productos revisados, ${restocks.length} avisos.`);
 }
