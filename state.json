@@ -1,6 +1,8 @@
 {
   "530893:809183": {
     "name": "Netflix",
+    "service": "Netflix",
+    "variant": "",
     "stock": 3,
     "price": "0.50",
     "currency": "EUR",
@@ -9,6 +11,8 @@
   },
   "530894:809184": {
     "name": "Disney+",
+    "service": "Disney+",
+    "variant": "",
     "stock": 3,
     "price": "0.40",
     "currency": "EUR",
@@ -17,6 +21,8 @@
   },
   "530898:809188": {
     "name": "Crunchyroll",
+    "service": "Crunchyroll",
+    "variant": "",
     "stock": 1,
     "price": "0.40",
     "currency": "EUR",
@@ -25,6 +31,8 @@
   },
   "530902:809192": {
     "name": "DAZN — Random",
+    "service": "DAZN",
+    "variant": "Random",
     "stock": 3,
     "price": "0.80",
     "currency": "EUR",
@@ -33,6 +41,8 @@
   },
   "530902:2068149": {
     "name": "DAZN — MOTOR (ES)",
+    "service": "DAZN",
+    "variant": "MOTOR (ES)",
     "stock": 0,
     "price": "1.00",
     "currency": "EUR",
@@ -41,6 +51,8 @@
   },
   "530902:2068150": {
     "name": "DAZN — FÚTBOL (ES)",
+    "service": "DAZN",
+    "variant": "FÚTBOL (ES)",
     "stock": 0,
     "price": "1.00",
     "currency": "EUR",
@@ -49,6 +61,8 @@
   },
   "530902:2068151": {
     "name": "DAZN — TOTAL",
+    "service": "DAZN",
+    "variant": "TOTAL",
     "stock": 0,
     "price": "1.50",
     "currency": "EUR",
@@ -57,6 +71,8 @@
   },
   "530907:809199": {
     "name": "Max",
+    "service": "Max",
+    "variant": "",
     "stock": 1,
     "price": "0.40",
     "currency": "EUR",
@@ -65,6 +81,8 @@
   },
   "530909:809201": {
     "name": "Paramount+ — USA",
+    "service": "Paramount+",
+    "variant": "USA",
     "stock": 0,
     "price": "0.40",
     "currency": "EUR",
@@ -73,6 +91,8 @@
   },
   "530909:2068152": {
     "name": "Paramount+ — LATAM / EU",
+    "service": "Paramount+",
+    "variant": "LATAM / EU",
     "stock": 0,
     "price": "0.40",
     "currency": "EUR",
@@ -81,6 +101,8 @@
   },
   "530912:809204": {
     "name": "Duolingo",
+    "service": "Duolingo",
+    "variant": "",
     "stock": 2,
     "price": "0.40",
     "currency": "EUR",
@@ -89,6 +111,8 @@
   },
   "530913:809205": {
     "name": "Steam [Lifetime]",
+    "service": "Steam [Lifetime]",
+    "variant": "",
     "stock": 17,
     "price": "0.40",
     "currency": "EUR",
@@ -97,6 +121,8 @@
   },
   "530917:809209": {
     "name": "ExpresVpn",
+    "service": "ExpresVpn",
+    "variant": "",
     "stock": 0,
     "price": "0.40",
     "currency": "EUR",
@@ -105,6 +131,8 @@
   },
   "530918:809210": {
     "name": "NBA",
+    "service": "NBA",
+    "variant": "",
     "stock": 3,
     "price": "0.25",
     "currency": "EUR",
@@ -113,6 +141,8 @@
   },
   "530920:809212": {
     "name": "Filmora",
+    "service": "Filmora",
+    "variant": "",
     "stock": 6,
     "price": "0.40",
     "currency": "EUR",
@@ -121,6 +151,8 @@
   },
   "530921:809213": {
     "name": "Amc+",
+    "service": "Amc+",
+    "variant": "",
     "stock": 0,
     "price": "0.40",
     "currency": "EUR",
@@ -129,6 +161,8 @@
   },
   "530925:809217": {
     "name": "Spotify Premium — Lifetime",
+    "service": "Spotify Premium",
+    "variant": "Lifetime",
     "stock": 0,
     "price": "1.00",
     "currency": "EUR",
@@ -137,6 +171,8 @@
   },
   "530925:2068153": {
     "name": "Spotify Premium — 1 año individual",
+    "service": "Spotify Premium",
+    "variant": "1 año individual",
     "stock": 0,
     "price": "2.00",
     "currency": "EUR",
@@ -145,6 +181,8 @@
   },
   "530928:809220": {
     "name": "Youtube Premium",
+    "service": "Youtube Premium",
+    "variant": "",
     "stock": 0,
     "price": "1.50",
     "currency": "EUR",
@@ -153,6 +191,8 @@
   },
   "531219:809854": {
     "name": "CAPCUTPRO",
+    "service": "CAPCUTPRO",
+    "variant": "",
     "stock": 0,
     "price": "1.00",
     "currency": "EUR",
@@ -161,6 +201,8 @@
   },
   "531222:809858": {
     "name": "Five M Ready",
+    "service": "Five M Ready",
+    "variant": "",
     "stock": 0,
     "price": "0.60",
     "currency": "EUR",
@@ -169,6 +211,8 @@
   },
   "531224:809860": {
     "name": "Rockstar Activation Codes",
+    "service": "Rockstar Activation Codes",
+    "variant": "",
     "stock": 0,
     "price": "0.60",
     "currency": "EUR",
@@ -177,6 +221,8 @@
   },
   "531225:809861": {
     "name": "Microsoft Random Codes",
+    "service": "Microsoft Random Codes",
+    "variant": "",
     "stock": 0,
     "price": "0.50",
     "currency": "EUR",
@@ -185,6 +231,8 @@
   },
   "531226:809862": {
     "name": "Canva",
+    "service": "Canva",
+    "variant": "",
     "stock": 0,
     "price": "1.00",
     "currency": "EUR",
