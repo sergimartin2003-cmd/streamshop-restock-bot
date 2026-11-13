@@ -1,0 +1,34 @@
+name: Avisos de reposición
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: restock
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Comprobar stock
+        env:
+          SELLAUTH_API_KEY: ${{ secrets.SELLAUTH_API_KEY }}
+          SELLAUTH_SHOP_ID: ${{ secrets.SELLAUTH_SHOP_ID }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: node check.mjs
+      - name: Guardar estado
+        run: |
+          if ! git diff --quiet -- state.json || [ -n "$(git status --porcelain state.json)" ]; then
+            git config user.name "streamshop-bot"
+            git config user.email "bot@users.noreply.github.com"
+            git add state.json
+            git commit -m "estado de stock"
+            git push
+          fi
