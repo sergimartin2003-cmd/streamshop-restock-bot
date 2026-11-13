@@ -22,13 +22,15 @@ jobs:
           SELLAUTH_API_KEY: ${{ secrets.SELLAUTH_API_KEY }}
           SELLAUTH_SHOP_ID: '194636'
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_SALES_WEBHOOK_URL: ${{ secrets.DISCORD_SALES_WEBHOOK_URL }}
         run: node check.mjs
       - name: Guardar estado
+        if: always()
         run: |
-          if ! git diff --quiet -- state.json || [ -n "$(git status --porcelain state.json)" ]; then
+          if [ -n "$(git status --porcelain state.json sales.json)" ]; then
             git config user.name "streamshop-bot"
             git config user.email "bot@users.noreply.github.com"
-            git add state.json
-            git commit -m "estado de stock"
+            git add state.json sales.json 2>/dev/null || git add state.json
+            git commit -m "estado de stock y ventas"
             git push
           fi

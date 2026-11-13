@@ -1,23 +1,48 @@
-// Bot de reposiciones StreamShopp: mira el stock en SellAuth y avisa en Discord
-// cuando un producto pasa de agotado a disponible (o recibe más stock).
+// Bot de StreamShopp para Discord:
+//  1) #📦┃stock  → aviso cuando un producto vuelve a tener stock (o recibe más)
+//  2) #💜┃ventas → feed público y anónimo de compras ("Un Crack acaba de comprar 1x Netflix usando PayPal")
 import fs from 'node:fs';
 
-const { SELLAUTH_API_KEY, SELLAUTH_SHOP_ID, DISCORD_WEBHOOK_URL, SHOP_URL = 'https://streamshopp.mysellauth.com' } = process.env;
+const {
+  SELLAUTH_API_KEY,
+  SELLAUTH_SHOP_ID,
+  DISCORD_WEBHOOK_URL, // canal de stock
+  DISCORD_SALES_WEBHOOK_URL, // canal de ventas (opcional)
+  SHOP_URL = 'https://streamshopp.mysellauth.com',
+} = process.env;
 if (!SELLAUTH_API_KEY || !SELLAUTH_SHOP_ID || !DISCORD_WEBHOOK_URL) {
   console.error('Faltan secretos: SELLAUTH_API_KEY, SELLAUTH_SHOP_ID o DISCORD_WEBHOOK_URL');
   process.exit(1);
 }
 const STATE = 'state.json';
+const SALES = 'sales.json';
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function api(path) {
   const r = await fetch(`https://api.sellauth.com/v1${path}`, {
     headers: { Authorization: `Bearer ${SELLAUTH_API_KEY}`, Accept: 'application/json' },
   });
-  if (!r.ok) throw new Error(`SellAuth ${r.status}: ${(await r.text()).slice(0, 300)}`);
+  if (!r.ok) throw new Error(`SellAuth ${r.status} en ${path.split('?')[0]}: ${(await r.text()).slice(0, 200)}`);
   return r.json();
 }
 
-// -1 / null = ilimitado en SellAuth
+async function post(url, body) {
+  for (let i = 0; i < 3; i++) {
+    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    if (res.status === 429) { await sleep(((await res.json().catch(() => ({}))).retry_after || 2) * 1000); continue; }
+    if (!res.ok) console.error('Discord', res.status, (await res.text()).slice(0, 200));
+    return;
+  }
+}
+
+const money = (v, cur = 'EUR') => {
+  const n = Number(v);
+  if (!isFinite(n)) return `${v} ${cur}`;
+  return new Intl.NumberFormat('es-ES', { style: 'currency', currency: cur || 'EUR' }).format(n);
+};
+
+/* ───────────── 1) STOCK ───────────── */
+
 const qty = (s) => (s === null || s === undefined || Number(s) < 0 ? Infinity : Number(s) || 0);
 
 async function loadProducts() {
@@ -32,77 +57,141 @@ async function loadProducts() {
   return all;
 }
 
+function imageOf(p) {
+  return p.image_url || p.images?.[0]?.url || p.image_urls?.[0] || null;
+}
+
 function snapshot(products) {
   const snap = {};
   for (const p of products) {
     if (p.type === 'group') continue;
-    if (p.visibility && p.visibility !== 'public') continue; // solo productos visibles
+    if (p.visibility && p.visibility !== 'public') continue;
     const vars = Array.isArray(p.variants) && p.variants.length ? p.variants : [{ id: 'base', name: '', stock: p.stock }];
     for (const v of vars) {
       if (v.visibility && v.visibility !== 'public') continue;
-      const key = `${p.id}:${v.id}`;
       const stock = qty(v.stock ?? v.stock_count);
-      snap[key] = {
+      snap[`${p.id}:${v.id}`] = {
         name: v.name && vars.length > 1 ? `${p.name} — ${v.name}` : p.name,
+        service: p.name,
+        variant: vars.length > 1 ? v.name || '' : '',
         stock: stock === Infinity ? -1 : stock,
         price: v.price ?? p.price ?? null,
         currency: p.currency || 'EUR',
         url: `${SHOP_URL}/product/${p.path || p.slug || p.id}`,
-        image: p.image_url || (p.images && p.images[0]?.url) || null,
+        image: imageOf(p),
       };
     }
   }
   return snap;
 }
 
-const prev = fs.existsSync(STATE) ? JSON.parse(fs.readFileSync(STATE, 'utf8')) : null;
-const now = snapshot(await loadProducts());
-
-if (!prev) {
-  fs.writeFileSync(STATE, JSON.stringify(now, null, 2));
-  console.log(`Primera ejecución: guardado el estado de ${Object.keys(now).length} productos, sin avisos.`);
-  process.exit(0);
-}
-
-const restocks = [];
-for (const [k, item] of Object.entries(now)) {
-  const before = prev[k]?.stock ?? 0;
-  const after = item.stock;
-  const was = before === -1 ? Infinity : before;
-  const is = after === -1 ? Infinity : after;
-  if (was === 0 && is > 0) restocks.push({ ...item, kind: 'vuelve' });
-  else if (was > 0 && is !== Infinity && is - was >= 3) restocks.push({ ...item, kind: 'mas', added: is - was });
-}
-
-const fmt = (n) => (n === -1 ? 'ilimitado' : `${n} uds.`);
-for (const r of restocks.slice(0, 10)) {
-  const embed = {
-    title: r.kind === 'vuelve' ? `🔔 ¡${r.name} vuelve a estar disponible!` : `📦 Stock nuevo de ${r.name}`,
+function restockEmbed(r) {
+  const lines = [
+    `🛍️ **Servicio:** ${r.service}`,
+    ...(r.variant ? [`🏷️ **Variante:** ${r.variant}`] : []),
+    `📦 **Stock disponible:** ${r.stock === -1 ? 'ilimitado' : r.stock}`,
+    ...(r.price != null ? [`💰 **Precio:** ${money(r.price, r.currency)}`] : []),
+    '',
+    `🔗 **[Comprar ahora](${r.url})**`,
+  ];
+  return {
+    title: r.kind === 'vuelve' ? '✨ STREAMSHOPP · PRODUCTO REPUESTO ✨' : '📦 STREAMSHOPP · STOCK AÑADIDO 📦',
     url: r.url,
-    description: r.kind === 'vuelve'
-      ? `Hemos repuesto **${r.name}**. Entrega automática al instante.`
-      : `Acabamos de añadir **${r.added}** unidades de **${r.name}**.`,
-    color: 0x7a5cff,
-    fields: [
-      { name: 'Stock', value: fmt(r.stock), inline: true },
-      ...(r.price ? [{ name: 'Precio', value: `${r.price} ${r.currency}`, inline: true }] : []),
-    ],
-    ...(r.image ? { thumbnail: { url: r.image } } : {}),
-    footer: { text: 'StreamShopp · Reposiciones' },
+    description: lines.join('\n'),
+    color: 0x19d98e,
+    ...(r.image ? { image: { url: r.image } } : {}),
+    footer: { text: 'StreamShopp · Entrega instantánea 24/7' },
     timestamp: new Date().toISOString(),
   };
-  const res = await fetch(DISCORD_WEBHOOK_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      username: 'StreamShopp',
-      embeds: [embed],
-      components: [],
-    }),
-  });
-  if (!res.ok) console.error('Discord', res.status, await res.text());
-  await new Promise((s) => setTimeout(s, 1200));
 }
 
-fs.writeFileSync(STATE, JSON.stringify(now, null, 2));
-console.log(`Revisados ${Object.keys(now).length} productos, ${restocks.length} avisos.`);
+async function runStock() {
+  const prev = fs.existsSync(STATE) ? JSON.parse(fs.readFileSync(STATE, 'utf8')) : null;
+  const now = snapshot(await loadProducts());
+  if (!prev) {
+    fs.writeFileSync(STATE, JSON.stringify(now, null, 2));
+    console.log(`Stock: primera ejecución, guardados ${Object.keys(now).length} productos.`);
+    return;
+  }
+  const restocks = [];
+  for (const [k, item] of Object.entries(now)) {
+    const was = (prev[k]?.stock ?? 0) === -1 ? Infinity : prev[k]?.stock ?? 0;
+    const is = item.stock === -1 ? Infinity : item.stock;
+    if (was === 0 && is > 0) restocks.push({ ...item, kind: 'vuelve' });
+    else if (was > 0 && is !== Infinity && is - was >= 3) restocks.push({ ...item, kind: 'mas' });
+  }
+  for (const r of restocks.slice(0, 10)) {
+    await post(DISCORD_WEBHOOK_URL, { username: 'StreamShopp Stock', embeds: [restockEmbed(r)] });
+    await sleep(1200);
+  }
+  fs.writeFileSync(STATE, JSON.stringify(now, null, 2));
+  console.log(`Stock: ${Object.keys(now).length} productos revisados, ${restocks.length} avisos.`);
+}
+
+/* ───────────── 2) VENTAS (feed anónimo) ───────────── */
+
+const NICKS = [
+  ['Un Crack', '🟢'], ['Un Máquina', '💜'], ['Un Fenómeno', '🔥'], ['Un Jefe', '👑'], ['Una Leyenda', '⭐'],
+  ['Un Titán', '⚡'], ['Un Pro', '💎'], ['Un Grande', '🟣'], ['Un Visionario', '🚀'], ['Un Campeón', '🏆'],
+];
+const COLORS = [0x7a5cff, 0x19d98e, 0xffb020, 0xff4d8d, 0x2fb6ff, 0xa06bff];
+
+function payMethod(inv) {
+  const g = String(inv.gateway || inv.payment_method?.name || '').toUpperCase();
+  if (!g) return 'otro método';
+  if (g.includes('PAYPAL')) return 'PayPal';
+  if (/STRIPE|CARD|SUMUP|SQUARE|CREDIT|APPLE|GOOGLE/.test(g)) return 'Tarjeta';
+  if (/BTC|ETH|LTC|USDT|USDC|SOL|CRYPTO|COIN|XMR|TRX|BNB|DOGE/.test(g)) return 'Cripto';
+  if (g.includes('BALANCE')) return 'Saldo';
+  return g.charAt(0) + g.slice(1).toLowerCase();
+}
+
+function itemsText(inv) {
+  const items = Array.isArray(inv.items) ? inv.items : [];
+  if (!items.length) return 'un producto';
+  return items
+    .map((it) => {
+      const name = it.custom_name || it.product?.name || 'producto';
+      return `${it.quantity || 1}x ${name}`;
+    })
+    .join(', ');
+}
+
+async function runSales() {
+  if (!DISCORD_SALES_WEBHOOK_URL) {
+    console.log('Ventas: sin DISCORD_SALES_WEBHOOK_URL, me lo salto.');
+    return;
+  }
+  const res = await api(
+    `/shops/${SELLAUTH_SHOP_ID}/invoices?statuses[]=completed&orderColumn=completed_at&orderDirection=desc&perPage=25`,
+  );
+  const list = (Array.isArray(res) ? res : res.data || []).filter((i) => i.status === 'completed');
+  const seen = fs.existsSync(SALES) ? JSON.parse(fs.readFileSync(SALES, 'utf8')) : null;
+  const ids = list.map((i) => String(i.id));
+  if (!seen) {
+    fs.writeFileSync(SALES, JSON.stringify({ ids: ids.slice(0, 200) }, null, 2));
+    console.log(`Ventas: primera ejecución, marcadas ${ids.length} ventas antiguas como vistas.`);
+    return;
+  }
+  const known = new Set(seen.ids);
+  const fresh = list.filter((i) => !known.has(String(i.id))).reverse(); // de más antigua a más nueva
+  const embeds = fresh.map((inv, n) => {
+    const [nick, dot] = NICKS[(Number(inv.id) + n) % NICKS.length] || NICKS[0];
+    return {
+      description: `» ${nick} ${dot} acaba de comprar **${itemsText(inv)}** usando **${payMethod(inv)}**. ¡Gracias por confiar en **StreamShopp**! 💜`,
+      color: COLORS[Number(inv.id) % COLORS.length],
+    };
+  });
+  for (let i = 0; i < embeds.length; i += 10) {
+    await post(DISCORD_SALES_WEBHOOK_URL, { username: 'StreamShopp Ventas', embeds: embeds.slice(i, i + 10) });
+    await sleep(1200);
+  }
+  fs.writeFileSync(SALES, JSON.stringify({ ids: [...new Set([...ids, ...seen.ids])].slice(0, 200) }, null, 2));
+  console.log(`Ventas: ${fresh.length} nuevas publicadas.`);
+}
+
+let failed = false;
+for (const [name, fn] of [['stock', runStock], ['ventas', runSales]]) {
+  try { await fn(); } catch (e) { failed = true; console.error(`Error en ${name}:`, e.message); }
+}
+if (failed) process.exitCode = 1;
