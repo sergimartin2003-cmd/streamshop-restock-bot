@@ -29,6 +29,16 @@
     "url": "https://streamshopp.mysellauth.com/product/crunchyroll",
     "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/b41e949d-d75f-48fd-77f9-086934cc3800/public"
   },
+  "530905:809196": {
+    "name": "Dazn [TOTAL]",
+    "service": "Dazn [TOTAL]",
+    "variant": "",
+    "stock": 0,
+    "price": "1.50",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/dazn-total",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/4349eac2-cc49-4eee-3de8-b609abce8b00/public"
+  },
   "530907:809199": {
     "name": "Max",
     "service": "Max",
@@ -38,6 +48,26 @@
     "currency": "EUR",
     "url": "https://streamshopp.mysellauth.com/product/max",
     "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/2d15a0d8-25a7-44c8-4d1a-7a1b3220cd00/public"
+  },
+  "530908:809200": {
+    "name": "Moviestar +",
+    "service": "Moviestar +",
+    "variant": "",
+    "stock": 2,
+    "price": "1.20",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/moviestar-",
+    "image": null
+  },
+  "530910:809202": {
+    "name": "Paramount+ [LATAM EU]",
+    "service": "Paramount+ [LATAM EU]",
+    "variant": "",
+    "stock": 1,
+    "price": "0.40",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/paramount-latam-eu",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/547fd4b1-b686-412e-48c9-ae9328650d00/public"
   },
   "530912:809204": {
     "name": "Duolingo",
@@ -98,6 +128,16 @@
     "currency": "EUR",
     "url": "https://streamshopp.mysellauth.com/product/amc",
     "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/ef7509c3-2782-4ea6-dc8b-04e06bb7da00/public"
+  },
+  "530927:809219": {
+    "name": "Spotify Premium 1 Year Individual",
+    "service": "Spotify Premium 1 Year Individual",
+    "variant": "",
+    "stock": 0,
+    "price": "2.00",
+    "currency": "EUR",
+    "url": "https://streamshopp.mysellauth.com/product/spotify-premium-1-year-individual",
+    "image": "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/b78bf83d-70cc-46e9-a995-84fd5f37da00/public"
   },
   "530928:809220": {
     "name": "Youtube Premium",
