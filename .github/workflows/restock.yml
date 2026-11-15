@@ -3,6 +3,11 @@ on:
   schedule:
     - cron: '*/5 * * * *'
   workflow_dispatch:
+    inputs:
+      prueba:
+        description: 'Enviar un mensaje de PRUEBA a #stock y #ventas'
+        type: boolean
+        default: false
 permissions:
   contents: write
 concurrency:
@@ -23,6 +28,7 @@ jobs:
           SELLAUTH_SHOP_ID: '194636'
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           DISCORD_SALES_WEBHOOK_URL: ${{ secrets.DISCORD_SALES_WEBHOOK_URL }}
+          PRUEBA: ${{ inputs.prueba && '1' || '' }}
         run: node check.mjs
       - name: Guardar estado
         if: always()

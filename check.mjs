@@ -200,6 +200,24 @@ async function runSales() {
   console.log(`Ventas: ${fresh.length} nuevas publicadas.`);
 }
 
+// Modo prueba (Run workflow → marcar "prueba"): manda un ejemplo a cada webhook y termina.
+if (process.env.PRUEBA === '1') {
+  const prods = Object.values(snapshot(await loadProducts()));
+  const p = prods.find((x) => x.stock !== 0) || prods[0];
+  if (p) await post(DISCORD_WEBHOOK_URL, { username: 'StreamShopp Stock', content: '🧪 **PRUEBA** del aviso de stock (no es un restock real)', embeds: [restockEmbed({ ...p, kind: 'vuelve' })] });
+  else await post(DISCORD_WEBHOOK_URL, { username: 'StreamShopp Stock', content: '🧪 PRUEBA: webhook de stock OK' });
+  if (DISCORD_SALES_WEBHOOK_URL) {
+    await sleep(1200);
+    await post(DISCORD_SALES_WEBHOOK_URL, {
+      username: 'StreamShopp Ventas',
+      content: '🧪 **PRUEBA** del feed de ventas (no es una venta real)',
+      embeds: [{ description: `» Un Crack 🟢 acaba de comprar **1x ${p?.service || 'Netflix'}** usando **PayPal**. ¡Gracias por confiar en **StreamShopp**! 💜`, color: 0x7a5cff }],
+    });
+  } else console.log('Prueba: falta DISCORD_SALES_WEBHOOK_URL');
+  console.log('Prueba enviada.');
+  process.exit(0);
+}
+
 let failed = false;
 for (const [name, fn] of [['stock', runStock], ['ventas', runSales]]) {
   try { await fn(); } catch (e) { failed = true; console.error(`Error en ${name}:`, e.message); }
