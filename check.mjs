@@ -218,8 +218,56 @@ if (process.env.PRUEBA === '1') {
   process.exit(0);
 }
 
+/* ───────────── 3) CONTADOR DE VENTAS EN STATS (canal de voz) ───────────── */
+
+const STATS_FILE = 'stats.json';
+const fmtNum = (n) => new Intl.NumberFormat('es-ES').format(n);
+
+async function countSales() {
+  // Total de pedidos completados según SellAuth (usa el total de la paginación; si no viene, cuenta páginas).
+  const first = await api(`/shops/${SELLAUTH_SHOP_ID}/invoices?statuses[]=completed&perPage=100&page=1`);
+  const total = first.total ?? first.meta?.total;
+  if (Number.isFinite(Number(total))) return Number(total);
+  let n = 0;
+  for (let page = 1; page <= 200; page++) {
+    const res = page === 1 ? first : await api(`/shops/${SELLAUTH_SHOP_ID}/invoices?statuses[]=completed&perPage=100&page=${page}`);
+    const list = (Array.isArray(res) ? res : res.data || []).filter((i) => i.status === 'completed');
+    n += list.length;
+    if (!list.length || Array.isArray(res) || (res.last_page && page >= res.last_page) || res.next_page_url === null) break;
+  }
+  return n;
+}
+
+async function runStats() {
+  const { DISCORD_BOT_TOKEN, STATS_CHANNEL_ID } = process.env;
+  if (!DISCORD_BOT_TOKEN || !STATS_CHANNEL_ID) {
+    console.log('Stats: falta DISCORD_BOT_TOKEN o STATS_CHANNEL_ID, me lo salto.');
+    return;
+  }
+  const total = await countSales();
+  const name = `📈┃${fmtNum(total)}${total > 0 ? '+' : ''} ventas`;
+  const prev = fs.existsSync(STATS_FILE) ? JSON.parse(fs.readFileSync(STATS_FILE, 'utf8')) : {};
+  if (prev.name === name) {
+    console.log(`Stats: sin cambios (${name}).`);
+    return;
+  }
+  // Discord permite 2 renombres cada 10 min por canal: solo renombramos si cambia el número.
+  const r = await fetch(`https://discord.com/api/v10/channels/${STATS_CHANNEL_ID}`, {
+    method: 'PATCH',
+    headers: { Authorization: `Bot ${DISCORD_BOT_TOKEN}`, 'Content-Type': 'application/json', 'X-Audit-Log-Reason': 'Contador de ventas' },
+    body: JSON.stringify({ name }),
+  });
+  if (r.status === 429) {
+    console.log('Stats: Discord limita el renombrado ahora mismo, se reintenta en la próxima ejecución.');
+    return;
+  }
+  if (!r.ok) throw new Error(`Discord ${r.status} al renombrar: ${(await r.text()).slice(0, 200)}`);
+  fs.writeFileSync(STATS_FILE, JSON.stringify({ name, total, updated: new Date().toISOString() }, null, 2));
+  console.log(`Stats: canal renombrado a "${name}".`);
+}
+
 let failed = false;
-for (const [name, fn] of [['stock', runStock], ['ventas', runSales]]) {
+for (const [name, fn] of [['stock', runStock], ['ventas', runSales], ['stats', runStats]]) {
   try { await fn(); } catch (e) { failed = true; console.error(`Error en ${name}:`, e.message); }
 }
 if (failed) process.exitCode = 1;
